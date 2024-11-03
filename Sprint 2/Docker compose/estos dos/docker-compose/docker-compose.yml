@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  web:
+    image: php:7.4-apache
+    container_name: lamp_web
+    volumes:
+      - ./src:/var/www/html/
+    ports:
+      - "8080:80"
+    networks:
+      - lampnet
+    restart: always
+    command: >
+      bash -c "docker-php-ext-install pdo_mysql && apache2-foreground"
+
+  db:
+    image: mysql:5.7
+    container_name: lamp_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vero
+    volumes:
+      - db_data:/var/lib/mysql
+      - C:\Users\vero_\Desktop\docker-compose\my.cnf:/etc/mysql/my.cnf
+    networks:
+      - lampnet
+    restart: always
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - lampnet
+    restart: always
+
+volumes:
+  db_data:
+
+networks:
+  lampnet:
