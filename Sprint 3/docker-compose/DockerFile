@@ -1,0 +1,18 @@
+# Usa la imagen oficial de PHP 8.3 con Apache
+FROM php:8.3-apache
+
+# Instalar extensiones necesarias para Drupal y PDO
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    unzip \
+    && docker-php-ext-install gd mbstring xml pdo pdo_mysql
+
+# Habilitar mod_rewrite
+RUN a2enmod rewrite
+
+# Expone el puerto 80 para Apache
+EXPOSE 80

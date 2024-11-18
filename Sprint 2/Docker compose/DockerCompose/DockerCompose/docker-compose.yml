@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   web:
     image: php:7.4-apache
@@ -10,23 +11,18 @@ services:
     networks:
       - lampnet
     restart: always
-    command: >
-      bash -c "docker-php-ext-install pdo_mysql && apache2-foreground"
 
   db:
     image: mysql:5.7
     container_name: lamp_db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: vero
+      MYSQL_DATABASE: your_name_db
     volumes:
       - db_data:/var/lib/mysql
-      - C:\Users\vero_\Desktop\docker-compose\my.cnf:/etc/mysql/my.cnf
     networks:
       - lampnet
     restart: always
-    ports:
-      - "3306:3306"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -34,6 +30,7 @@ services:
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: your_name_db  # Add this line to use the same database
     ports:
       - "8081:80"
     depends_on:
@@ -47,3 +44,4 @@ volumes:
 
 networks:
   lampnet:
+
