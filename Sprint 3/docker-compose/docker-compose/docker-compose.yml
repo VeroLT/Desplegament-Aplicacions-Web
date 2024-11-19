@@ -1,5 +1,5 @@
 services:
-  php-apache:
+  php-apache: php:8.3
     build:
       context: ./php
       dockerfile: Dockerfile
@@ -12,7 +12,9 @@ services:
       - mariadb
 
   mariadb:
-    image: mariadb:10.11
+    build: mariadb:10.11
+        dockerfile: Dockerfile
+    container_name: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: root
@@ -22,16 +24,6 @@ services:
       - mariadb_data:/var/lib/mysql
     ports:
       - "3306:3306"
-
-  phpmyadmin:
-    image: phpmyadmin:latest
-    environment:
-      PMA_HOST: mariadb
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "8082:80"
-    depends_on:
-      - mariadb
 
 volumes:
   mariadb_data:
