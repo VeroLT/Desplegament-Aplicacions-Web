@@ -1,8 +1,8 @@
 services:
-  php-apache: php:8.3
+  php-apache:
     build:
-      context: ./php
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: DockerFile
     container_name: php-apache
     volumes:
       - ./src:/var/www/html
@@ -12,8 +12,7 @@ services:
       - mariadb
 
   mariadb:
-    build: mariadb:10.11
-        dockerfile: Dockerfile
+    image: mariadb:10.11
     container_name: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: root

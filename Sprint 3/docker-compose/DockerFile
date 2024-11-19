@@ -11,8 +11,3 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && docker-php-ext-install gd mbstring xml pdo pdo_mysql
 
-# Habilitar mod_rewrite
-RUN a2enmod rewrite
-
-# Expone el puerto 80 para Apache
-EXPOSE 80
